@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>链上漫游者 Leo Chain · 个人主页</title>
+<style>
+:root{--bg:#07080f;--panel:#0e1120;--line:#1d2340;--text:#e6e9f5;--muted:#8a91b4;--cyan:#00f0ff;--pink:#ff2bd6;--green:#39ff88;--gold:#f7c948}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Noto Serif CJK SC",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(0,240,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.05) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+nav{position:sticky;top:0;z-index:10;background:rgba(7,8,15,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{font-weight:800;letter-spacing:1px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav ul{display:flex;gap:22px;list-style:none;font-size:14px;color:var(--muted)}
+nav ul a:hover{color:var(--cyan)}
+.ticker{border-bottom:1px solid var(--line);background:#0a0c18;overflow:hidden;white-space:nowrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;position:relative;z-index:1}
+.ticker-track{display:inline-block;padding:8px 0;animation:scroll 40s linear infinite}
+.ticker span.item{margin:0 26px}
+.up{color:var(--green)}.down{color:#ff5470}.sym{color:var(--cyan);font-weight:700;margin-right:6px}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero{min-height:78vh;display:flex;align-items:center;padding:80px 0}
+.tag{display:inline-block;font-family:ui-monospace,monospace;font-size:13px;color:var(--green);border:1px solid rgba(57,255,136,.4);padding:4px 12px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:clamp(40px,7vw,80px);line-height:1.1;font-weight:900;margin-bottom:12px}
+.hero h1 .en{display:block;font-size:.5em;margin-top:10px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+.glow{text-shadow:0 0 18px rgba(0,240,255,.55)}
+.hero p{font-size:clamp(16px,2.2vw,20px);color:var(--muted);max-width:640px;margin:18px 0 32px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:12px 26px;border-radius:10px;font-weight:700;border:1px solid var(--cyan);color:var(--cyan);transition:.2s}
+.btn.primary{background:linear-gradient(90deg,var(--cyan),var(--pink));color:#07080f;border:none;box-shadow:0 0 24px rgba(255,43,214,.35)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 22px rgba(0,240,255,.4)}
+section{padding:80px 0}
+.sec-title{font-size:30px;font-weight:800;margin-bottom:8px}
+.sec-title::before{content:"// ";color:var(--pink);font-family:ui-monospace,monospace}
+.sec-sub{color:var(--muted);margin-bottom:36px}
+.about{display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
+.card{background:linear-gradient(180deg,rgba(20,24,46,.9),rgba(14,17,32,.9));border:1px solid var(--line);border-radius:16px;padding:26px;transition:.25s;position:relative}
+.card:hover{border-color:var(--cyan);box-shadow:0 0 26px rgba(0,240,255,.18);transform:translateY(-3px)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat{text-align:center;padding:20px 10px}
+.stat b{display:block;font-size:30px;color:var(--cyan);font-family:ui-monospace,monospace}
+.stat small{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:12px;padding:3px 10px;border-radius:999px;background:rgba(255,43,214,.1);color:var(--pink);border:1px solid rgba(255,43,214,.3)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:22px;font-weight:900;margin-bottom:16px}
+.card h3{font-size:19px;margin-bottom:6px}
+.card p{color:var(--muted);font-size:14px}
+.price{margin-top:14px;font-family:ui-monospace,monospace;font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.badge{position:absolute;top:16px;right:16px;font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(247,201,72,.12);color:var(--gold);border:1px solid rgba(247,201,72,.35)}
+.post .meta{font-size:12px;color:var(--muted);font-family:ui-monospace,monospace;margin-bottom:8px}
+.post a.more{display:inline-block;margin-top:14px;color:var(--cyan);font-size:14px}
+.contact{text-align:center}
+.contact .grid{max-width:720px;margin:0 auto}
+.contact .card{text-align:center}
+.contact .card b{display:block;color:var(--cyan);font-family:ui-monospace,monospace;margin-top:4px}
+.disclaimer{max-width:720px;margin:30px auto 0;font-size:12px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--muted);font-size:13px;position:relative;z-index:1}
+@media(max-width:760px){nav ul{display:none}.about{grid-template-columns:1fr}section{padding:56px 0}.hero{min-height:auto;padding:60px 0}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="#top">◆ LEO.CHAIN</a>
+  <ul><li><a href="#about">关于我</a></li><li><a href="#tracks">关注赛道</a></li><li><a href="#posts">观点文章</a></li><li><a href="#contact">联系方式</a></li></ul>
+</div></nav>
+
+<div class="ticker" aria-label="实时行情"><div class="ticker-track" id="ticker"><span class="item" style="color:var(--muted)">行情加载中…</span></div></div>
+
+<header class="hero" id="top"><div class="wrap">
+  <span class="tag">● ONCHAIN · WEB3 · DeFi</span>
+  <h1 class="glow">链上漫游者<span class="en">Leo Chain</span></h1>
+  <p>穿梭在区块与区块之间，记录周期、研究协议、分享链上观察。<br>不喊单，只做独立思考与长期主义。</p>
+  <div class="btns"><a class="btn primary" href="#posts">阅读观点</a><a class="btn" href="#contact">联系我</a></div>
+</div></header>
+
+<section id="about"><div class="wrap">
+  <h2 class="sec-title">关于我</h2>
+  <p class="sec-sub">一个相信代码即规则的链上研究者</p>
+  <div class="about">
+    <div class="card">
+      <p style="color:var(--text);font-size:16px">你好，我是 Leo。经历过牛熊轮回，关注区块链基础设施、DeFi 协议设计与链上数据分析。平时喜欢拆解白皮书、跟踪链上资金流向，并把研究心得整理成通俗易懂的文章。</p>
+      <p style="margin-top:12px">我的原则：DYOR（自己做研究）、风险第一、远离杠杆赌博。</p>
+      <div class="chips"><span class="chip">链上数据</span><span class="chip">协议研究</span><span class="chip">DeFi</span><span class="chip">Layer2</span><span class="chip">周期观察</span></div>
+    </div>
+    <div class="stats">
+      <div class="card stat"><b>BTC</b><small>信仰起点</small></div>
+      <div class="card stat"><b>DYOR</b><small>研究原则</small></div>
+      <div class="card stat"><b>24/7</b><small>链上不打烊</small></div>
+      <div class="card stat"><b>HODL</b><small>长期主义</small></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="tracks"><div class="wrap">
+  <h2 class="sec-title">关注的赛道 / 项目</h2>
+  <p class="sec-sub">价格数据来自 CoinGecko 公共接口，仅供参考，不构成投资建议</p>
+  <div class="grid">
+    <div class="card"><div class="icon" style="background:rgba(247,147,26,.15);color:#f7931a">₿</div><h3>Bitcoin · BTC</h3><p>数字黄金与价值存储，关注减半周期、ETF 资金流与比特币生态扩展。</p><div class="price" data-id="bitcoin">价格：—</div></div>
+    <div class="card"><div class="icon" style="background:rgba(98,126,234,.18);color:#8fa4ff">Ξ</div><h3>Ethereum · ETH</h3><p>智能合约平台的基石，关注升级路线图、质押生态与 Rollup 中心化路线。</p><div class="price" data-id="ethereum">价格：—</div></div>
+    <div class="card"><div class="icon" style="background:rgba(57,255,136,.12);color:var(--green)">◎</div><h3>DeFi</h3><p>去中心化交易、借贷与稳定币，关注协议收入、真实收益与安全审计。</p><div class="price">赛道观察 · 无价格数据</div></div>
+    <div class="card"><div class="icon" style="background:rgba(255,43,214,.12);color:var(--pink)">L2</div><h3>Layer2</h3><p>以太坊扩容方案，关注 Optimistic 与 ZK Rollup 的技术演进与生态发展。</p><div class="price">赛道观察 · 无价格数据</div></div>
+  </div>
+</div></section>
+
+<section id="posts"><div class="wrap">
+  <h2 class="sec-title">观点文章</h2>
+  <p class="sec-sub">个人观点，仅供交流，不构成投资建议</p>
+  <div class="grid">
+    <article class="card post"><div class="meta">2026-09-08 · 周期</div><h3>BTC 长期持有的底层逻辑</h3><p>我持有比特币，不是因为它明天会涨，而是因为它的规则不会变：总量 2100 万、发行节奏公开透明、没有任何人能随意增发。在法币持续扩张的世界里，可验证的稀缺性本身就是价值。短期波动是持有的成本，真正的风险是用杠杆和情绪去对抗周期。定投、冷钱包、拉长时间维度，是普通人最朴素也最有效的策略。</p></article>
+    <article class="card post"><div class="meta">2026-09-17 · Layer2</div><h3>以太坊 L2 格局：从百花齐放到强者恒强</h3><p>L2 赛道正在从“发币抢用户”走向“比拼真实需求”。Optimistic 与 ZK 两条路线并行，但最终胜负取决于开发者生态、流动性深度和去中心化程度，而不只是 TPS。我更关注排序器是否去中心化、跨链体验是否顺滑、手续费收入能否覆盖成本。未来大概率是少数几条通用 L2 加若干垂直应用链的格局，碎片化的流动性终将重新聚合。</p></article>
+    <article class="card post"><div class="meta">2026-09-26 · DeFi</div><h3>DeFi 风险管理：先活下来，再谈收益</h3><p>DeFi 里最贵的一课，往往不是错过行情，而是本金归零。我的几条底线：只用经过多次审计、运行时间足够长的协议；高 APY 先问收益从哪里来，说不清就不碰；单一协议仓位不超过总资产的一小部分；定期撤销无用的合约授权；警惕稳定币脱锚和预言机风险。收益是对风险的补偿，看不懂的风险，就是最大的风险。</p></article>
+  </div>
+</div></section>
+
+<section id="contact" class="contact"><div class="wrap">
+  <h2 class="sec-title">联系方式</h2>
+  <p class="sec-sub">欢迎交流研究心得（不接受喊单与私募推广）</p>
+  <div class="grid">
+    <div class="card"><div class="icon" style="margin:0 auto 12px;background:rgba(255,255,255,.08)">𝕏</div><h3>X / Twitter</h3><b>@leochain_web3</b></div>
+    <div class="card"><div class="icon" style="margin:0 auto 12px;background:rgba(0,136,204,.18);color:#4fc3ff">✈</div><h3>Telegram</h3><b>@leochain_tg</b></div>
+  </div>
+  <p class="disclaimer">免责声明：本站内容仅为个人观点分享，不构成任何投资建议。加密资产波动剧烈，请谨慎决策、自行研究。</p>
+</div></section>
+
+<footer>© <span id="yr"></span> 链上漫游者 Leo Chain · Built on-chain spirit ◆</footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+const COINS=[['bitcoin','BTC'],['ethereum','ETH'],['solana','SOL'],['binancecoin','BNB'],['arbitrum','ARB'],['optimism','OP']];
+const fmt=n=>'$'+(n>=1?n.toLocaleString('en-US',{maximumFractionDigits:2}):n.toFixed(4));
+async function loadPrices(){
+  const t=document.getElementById('ticker');
+  try{
+    const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),8000);
+    const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+COINS.map(c=>c[0]).join(',')+'&vs_currencies=usd&include_24hr_change=true',{signal:ctrl.signal});
+    if(!r.ok)throw new Error(r.status);
+    const d=await r.json();
+    const items=COINS.filter(([id])=>d[id]).map(([id,s])=>{const p=d[id].usd,c=d[id].usd_24h_change||0;return `<span class="item"><span class="sym">${s}</span>${fmt(p)} <span class="${c>=0?'up':'down'}">${c>=0?'▲':'▼'} ${Math.abs(c).toFixed(2)}%</span></span>`}).join('');
+    if(!items)throw new Error('empty');
+    t.innerHTML=items+items;
+    document.querySelectorAll('.price[data-id]').forEach(el=>{const x=d[el.dataset.id];if(x){const c=x.usd_24h_change||0;el.innerHTML=`价格：<span style="color:var(--text)">${fmt(x.usd)}</span> <span class="${c>=0?'up':'down'}">${c>=0?'+':''}${c.toFixed(2)}%</span> <small>(24h)</small>`;}});
+  }catch(e){
+    t.style.animation='none';
+    t.innerHTML='<span class="item" style="color:var(--muted)">实时行情暂不可用 · 数据来源 CoinGecko · 请稍后刷新</span>';
+    document.querySelectorAll('.price[data-id]').forEach(el=>el.textContent='价格：暂不可用');
+  }
+}
+loadPrices();setInterval(loadPrices,60000);
+</script>
+</body>
+</html>
