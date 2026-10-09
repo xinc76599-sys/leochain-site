@@ -416,6 +416,7 @@ function renderEval() {
       <div><span>平均盈利 / 亏损</span><b><span class="up">+${fmt(e.avgWin)}</span> / <span class="down">-${fmt(e.avgLoss)}</span></b></div>
       <div><span>回测总盈亏（${e.bt.n} 笔）</span><b class="${cls(e.bt.total)}">${fmt(e.bt.total)} U</b></div>
       <div><span>回测最大回撤</span><b class="down">-${fmt(e.bt.maxDD)} U</b></div></div>
+    ${e.samples < 10 ? '<div class="reason" style="background:rgba(255,149,0,.1);color:#8a4b00">⚠️ 回测样本仅 ' + e.samples + ' 笔，胜率统计参考意义有限。</div>' : ''}
     ${e.expected < 0 ? '<div class="reason" style="background:rgba(229,56,59,.08);color:#9b1c1f">⚠️ 该参数在回测中单笔期望为负，即使胜率较高，长期大概率亏损，建议调整参数。</div>' : ''}
     ${Q.form.tp <= 0.1 ? '<div class="reason" style="background:rgba(255,149,0,.1);color:#8a4b00">⚠️ 止盈幅度 ≤ 双边手续费 0.1%，触发止盈也会亏损。</div>' : ''}
     <div class="reason">📝 信号理由：${esc(e.reason)}</div>

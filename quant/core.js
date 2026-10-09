@@ -187,7 +187,7 @@
     const o = { id: pos.id, instId: pos.instId, symbol: pos.symbol, strategy: cfg.type, side: 'long', lev: cfg.lev, margin, adds: pos.fills.length - 1,
       entry: pos.fills[0].px, avg: pos.avg, exit: px, openTime: pos.openTime, closeTime: Date.now(), reason, pnl: net, fee: p.fee, win: net > 0,
       est: pos.eval ? { winRate: pos.eval.winRate, expected: pos.eval.expected, maxLoss: pos.eval.maxLoss, rr: pos.eval.rr, reason: pos.eval.reason, samples: pos.eval.samples } : null };
-    this.s.orders.unshift(o); this.h.onOrder && this.h.onOrder(o);
+    this.s.orders.unshift(o); if (this.s.orders.length > (this.s.maxOrders || 5000)) this.s.orders.length = this.s.maxOrders || 5000; this.h.onOrder && this.h.onOrder(o, pos);
     this.log(`平仓 ${pos.symbol} ${reason} @${fmtPx(px)} 盈亏 ${net >= 0 ? '+' : ''}${net.toFixed(2)}U`, net >= 0 ? 'win' : 'loss');
   };
   Engine.prototype.closeAll = function (prices, why) {
@@ -198,6 +198,7 @@
     if (s.available < margin) { this.log(`${inst.id} 可用余额不足（需 ${margin.toFixed(2)}U），跳过开仓`, 'warn'); return null; }
     const pos = mkPos(px, margin, 0); pos.id = 'O' + (this.s.seq++); pos.instId = inst.id; pos.symbol = inst.symbol; pos.openTime = Date.now(); pos.cfg = inst.cfg;
     pos.eval = inst.eval; this.s.positions.push(pos);
+    this.h.onOpen && this.h.onOpen(pos, inst);
     this.log(`开仓 ${inst.symbol} 多 @${fmtPx(px)} 保证金 ${margin.toFixed(2)}U ×${inst.cfg.lev}（预估胜率 ${inst.eval ? (inst.eval.winRate * 100).toFixed(1) + '%' : '-'}）`);
     return pos;
   };
@@ -217,7 +218,7 @@
         const last = pos.fills[pos.fills.length - 1];
         if (pos.fills.length - 1 < cfg.martMaxAdds && px <= last.px * (1 - cfg.martStep / 100)) {
           const m = last.margin * cfg.martMult;
-          if (this.summary({}).available >= m) { addFill(pos, px, m, 0); this.log(`${inst.id} 马丁加仓 #${pos.fills.length - 1} @${fmtPx(px)} 保证金 ${m.toFixed(2)}U，均价 ${fmtPx(pos.avg)}`); }
+          if (this.summary({}).available >= m) { addFill(pos, px, m, 0); this.h.onAdd && this.h.onAdd(pos, inst, px, m); this.log(`${inst.id} 马丁加仓 #${pos.fills.length - 1} @${fmtPx(px)} 保证金 ${m.toFixed(2)}U，均价 ${fmtPx(pos.avg)}`); }
         }
       }
       const ex = checkExit(pos, px, px, cfg); if (ex) this.closePos(pos, px, ex.reason);

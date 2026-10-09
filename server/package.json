@@ -1,0 +1,10 @@
+{
+  "name": "leoquant-server",
+  "version": "1.0.0",
+  "description": "LeoQuant 独立策略引擎：行情轮询、回测评估、模拟盘、SQLite、REST API、可选实盘(ccxt)",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": { "start": "node src/index.js", "selftest": "node src/selftest.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "better-sqlite3": "^11.7.0", "ccxt": "^4.4.0" }
+}
