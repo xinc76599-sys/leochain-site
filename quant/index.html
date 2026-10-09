@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>LeoQuant · 行情监控与量化</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-blob b1"></div><div class="bg-blob b2"></div><div class="bg-blob b3"></div>
+<div id="app">
+  <header class="top glass">
+    <div class="brand">LeoQuant <span class="ver">V1</span></div>
+    <div class="search rip" id="searchBtn"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>搜索币种</span></div>
+    <div class="src-dot" id="srcDot" title="数据源状态"></div>
+  </header>
+  <div class="risk-banner">⚠️ 胜率/预估为历史回测估算，不代表未来，不保证盈利。默认模拟盘。</div>
+  <main id="pages">
+    <section class="page active" id="p-market"></section>
+    <section class="page" id="p-hot"></section>
+    <section class="page" id="p-quant"></section>
+    <section class="page" id="p-board"></section>
+    <section class="page" id="p-more"></section>
+  </main>
+  <nav class="tabbar glass">
+    <button class="tab active rip" data-p="market"><i>📈</i><span>行情</span></button>
+    <button class="tab rip" data-p="hot"><i>⚡</i><span>异动</span></button>
+    <button class="tab rip" data-p="quant"><i>🤖</i><span>量化</span></button>
+    <button class="tab rip" data-p="board"><i>📊</i><span>看板</span></button>
+    <button class="tab rip" data-p="more"><i>⋯</i><span>更多</span></button>
+  </nav>
+</div>
+<div class="sheet-mask" id="mask"></div>
+<div class="sheet glass" id="sheet"><div class="grab"></div><button class="sheet-x rip" id="sheetX" aria-label="关闭">✕</button><div id="sheetBody"></div></div>
+<div class="toast" id="toast"></div>
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
